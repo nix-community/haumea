@@ -140,9 +140,15 @@ Default values of optional function arguments will be ignored, e.g.
 for `{ foo ? "bar" }: foo`, `"bar"` will be ignored, and it requires `inputs` to contain `foo`.
 For that reason, although not strictly forbidden, optional arguments are discouraged since they are no-ops.
 
+### [`loaders.path`](src/loaders/verbatim.nix)
+
+Type: `{ ... } -> Path -> Path`
+
+This loader will simply return the path of the file without `import`ing it.
+
 ### [`loaders.verbatim`](src/loaders/verbatim.nix)
 
-Type: `{ self, super, root, ... } -> Path -> a`
+Type: `{ ... } -> Path -> a`
 
 This loader will simply `import` the file without providing any input.
 It is useful when the files being loaded are mostly functions that don't require any external input.
