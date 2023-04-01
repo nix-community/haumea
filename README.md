@@ -6,6 +6,10 @@ Haumea is not related to or a replacement for NixOS modules.
 It is closer to the module systems of traditional programming languages,
 with support for file hierarchy and visibility.
 
+```bash
+nix flake init -t github:nix-community/haumea
+```
+
 ## Usage
 
 ### [`load`](src/load.nix)
