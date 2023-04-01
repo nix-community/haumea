@@ -69,13 +69,13 @@ let
           nameValuePair name {
             inherit path visibility;
             isDir = true;
-            children = fix (self: aggregate {
+            children = aggregate {
               inherit inputs loader;
               src = src + "/${path}";
               tree = tree // {
                 pov = tree.pov ++ [ name ];
               };
-            });
+            };
           }
         else if type == "regular" && hasSuffix ".nix" path then
           let
