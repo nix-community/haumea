@@ -121,8 +121,8 @@ Type: `{ self, super, root, ... } -> Path -> a`
 
 A wrapper around `callPackageWith`.
 It adds `override` and `overrideDerivation` to the output (as `makeOverridable` does),
-an requires the file being loaded to be a function that returns an attribute set.
-Different from [`loaders.default`], it will respect optional function arguments,
+and requires the file being loaded to be a function that returns an attribute set.
+Unlike [`loaders.default`], it will respect optional function arguments,
 as they can be overridden with the added `override` attribute.
 
 ### [`loaders.default`](src/loaders/default.nix)
