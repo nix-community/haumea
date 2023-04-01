@@ -148,7 +148,7 @@ It is useful when the files being loaded are mostly functions that don't require
 [std](https://github.com/divnix/std) is a more full-featured framework that also has filesystem-based auto-importing.
 Haumea has very different goals, with more focus on Nix libraries.
 
-[digga](https://github.com/divnix) has similar functionality via `rakeLeaves`,
+[digga](https://github.com/divnix/digga) has similar functionality via `rakeLeaves`,
 but it is more focused on system and home configurations,
 and haumea has more features in this specific aspect.
 
