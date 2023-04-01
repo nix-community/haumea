@@ -10,6 +10,14 @@ with support for file hierarchy and visibility.
 nix flake init -t github:nix-community/haumea
 ```
 
+## Versioning
+
+Haumea follows [semantic versioning](https://semver.org).
+Breaking changes can happen in main branch at any time,
+so it is recommended to pin haumea to a specific tag.
+A list of available versions can be found on the
+[releases](https://github.com/nix-community/haumea/releases) page.
+
 ## Usage
 
 ### [`load`](src/load.nix)
