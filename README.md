@@ -140,7 +140,7 @@ Default values of optional function arguments will be ignored, e.g.
 for `{ foo ? "bar" }: foo`, `"bar"` will be ignored, and it requires `inputs` to contain `foo`.
 For that reason, although not strictly forbidden, optional arguments are discouraged since they are no-ops.
 
-### [`loaders.path`](src/loaders/verbatim.nix)
+### [`loaders.path`](src/loaders/path.nix)
 
 Type: `{ ... } -> Path -> Path`
 
