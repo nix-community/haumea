@@ -166,6 +166,14 @@ Type: `{ ... } -> Path -> a`
 This loader will simply `import` the file without providing any input.
 It is useful when the files being loaded are mostly functions that don't require any external input.
 
+### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
+
+Type: `{ ... } -> { ... }`
+
+This transformer will lift the contents of `default` into the module.
+It will fail if `default` is not an attribute set,
+or has any overlapping attributes with the module.
+
 ## Alternatives
 
 [std](https://github.com/divnix/std) is a more full-featured framework that also has filesystem-based auto-importing.
