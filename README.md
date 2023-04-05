@@ -22,7 +22,7 @@ A list of available versions can be found on the
 
 ### [`load`](src/load.nix)
 
-Type: `{ src, loader?, inputs? } -> { ... }`
+Type: `{ src, loader?, inputs?, transformer? } -> { ... }`
 
 Arguments:
 
@@ -40,6 +40,11 @@ Arguments:
 
   `self`, `super`, and `root` are reserved names that cannot be passed as an input.
   To work around that, remove them using `removeAttrs`, or pass them by overriding the loader.
+
+- (optional) `transformer` : `{ ... } -> a`
+
+  Module transformer, defaults to `id` (no transformation).
+  This will transform each directory module in `src`, including the root.
 
 The main entry point of haumea. This is probably the function you are looking for.
 
