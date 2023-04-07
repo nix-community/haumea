@@ -17,6 +17,7 @@ let
     flip
     getAttrFromPath
     hasSuffix
+    id
     nameValuePair
     optionalAttrs
     pipe
@@ -40,21 +41,22 @@ let
   entry = { isDir, path, ... }:
     "${if isDir then "directory" else "file"} '${path}'";
 
-  view = { cursor ? [ ], node, pov }:
+  view = { cursor ? [ ], node, pov, transformer }:
     if node.isDir then
-      flip concatMapAttrs node.children
-        (name: node: optionalAttrs
-          {
-            public = true;
-            root = pov != "external";
-            super = pov != "external" && take (length cursor) pov == cursor;
-          }.${node.visibility}
-          {
-            ${name} = view {
-              cursor = cursor ++ [ name ];
-              inherit node pov;
-            };
-          })
+      transformer
+        (flip concatMapAttrs node.children
+          (name: node: optionalAttrs
+            {
+              public = true;
+              root = pov != "external";
+              super = pov != "external" && take (length cursor) pov == cursor;
+            }.${node.visibility}
+            {
+              ${name} = view {
+                cursor = cursor ++ [ name ];
+                inherit node pov transformer;
+              };
+            }))
     else
       node.content;
 
@@ -116,7 +118,11 @@ let
     ];
 in
 
-{ src, loader ? root.loaders.default, inputs ? { } }:
+{ src
+, loader ? root.loaders.default
+, inputs ? { }
+, transformer ? id
+}:
 
 assert all
   (name: inputs ? ${name}
@@ -124,13 +130,14 @@ assert all
   [ "self" "super" "root" ];
 
 view {
+  inherit transformer;
   pov = "external";
   node = fix (node: {
     isDir = true;
     children = aggregate {
       inherit src loader inputs;
       tree = {
-        inherit node;
+        inherit node transformer;
         pov = [ ];
       };
     };

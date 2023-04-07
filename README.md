@@ -22,7 +22,7 @@ A list of available versions can be found on the
 
 ### [`load`](src/load.nix)
 
-Type: `{ src, loader?, inputs? } -> { ... }`
+Type: `{ src, loader?, inputs?, transformer? } -> { ... }`
 
 Arguments:
 
@@ -40,6 +40,11 @@ Arguments:
 
   `self`, `super`, and `root` are reserved names that cannot be passed as an input.
   To work around that, remove them using `removeAttrs`, or pass them by overriding the loader.
+
+- (optional) `transformer` : `{ ... } -> a`
+
+  Module transformer, defaults to `id` (no transformation).
+  This will transform each directory module in `src`, including the root.
 
 The main entry point of haumea. This is probably the function you are looking for.
 
@@ -160,6 +165,14 @@ Type: `{ ... } -> Path -> a`
 
 This loader will simply `import` the file without providing any input.
 It is useful when the files being loaded are mostly functions that don't require any external input.
+
+### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
+
+Type: `{ ... } -> { ... }`
+
+This transformer will lift the contents of `default` into the module.
+It will fail if `default` is not an attribute set,
+or has any overlapping attributes with the module.
 
 ## Alternatives
 
