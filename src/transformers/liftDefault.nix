@@ -6,7 +6,7 @@ let
     ;
 in
 
-mod:
+_: mod:
 
 unionOfDisjoint
   (removeAttrs mod [ "default" ])

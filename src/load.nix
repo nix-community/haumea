@@ -43,7 +43,7 @@ let
 
   view = { cursor ? [ ], node, pov, transformer }:
     if node.isDir then
-      transformer
+      transformer cursor
         (flip concatMapAttrs node.children
           (name: node: optionalAttrs
             {
@@ -121,7 +121,7 @@ in
 { src
 , loader ? root.loaders.default
 , inputs ? { }
-, transformer ? id
+, transformer ? _: id
 }:
 
 assert all
