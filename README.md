@@ -41,9 +41,9 @@ Arguments:
   `self`, `super`, and `root` are reserved names that cannot be passed as an input.
   To work around that, remove them using `removeAttrs`, or pass them by overriding the loader.
 
-- (optional) `transformer` : `{ ... } -> a`
+- (optional) `transformer` : `cursor :: [ String ] -> { ... } -> a`
 
-  Module transformer, defaults to `id` (no transformation).
+  Module transformer, defaults to `_: id` (no transformation).
   This will transform each directory module in `src`, including the root.
 
 The main entry point of haumea. This is probably the function you are looking for.
@@ -168,7 +168,7 @@ It is useful when the files being loaded are mostly functions that don't require
 
 ### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
 
-Type: `{ ... } -> { ... }`
+Type: `_: { ... } -> { ... }`
 
 This transformer will lift the contents of `default` into the module.
 It will fail if `default` is not an attribute set,
