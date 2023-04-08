@@ -6,6 +6,7 @@ let
     attrValues
     elemAt
     foldl'
+    isList
     length
     mapAttrs
     match
@@ -122,7 +123,14 @@ in
 , loader ? root.loaders.default
 , inputs ? { }
 , transformer ? _: id
-}:
+}: let
+  transformer' =
+    if isList transformer
+    then (cursor: mod: pipe mod (
+      map (t: t cursor) transformer)
+    )
+    else transformer;
+in
 
 assert all
   (name: inputs ? ${name}
@@ -130,15 +138,16 @@ assert all
   [ "self" "super" "root" ];
 
 view {
-  inherit transformer;
   pov = "external";
+  transformer = transformer';
   node = fix (node: {
     isDir = true;
     children = aggregate {
       inherit src loader inputs;
       tree = {
-        inherit node transformer;
         pov = [ ];
+        transformer = transformer';
+        inherit node;
       };
     };
   });
