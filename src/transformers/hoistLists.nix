@@ -31,17 +31,10 @@ in
 
 cursor:
 
-if cursor == [ ] # toplevel
-then
-  concatMapAttrsWith (mergeAttrsButConcatOn to)
-    (file: value: if ! value ? ${from} then { ${file} = value; } else {
-      ${file} = removeAttrs value [ from ];
-      # top level ${from} declarations are omitted from merging
-      ${to} = value.${from};
-    })
-else
-  concatMapAttrsWith (mergeAttrsButConcatOn from)
-    (file: value: if ! value ? ${from} then { ${file} = value; } else {
-      ${file} = removeAttrs value [ from ];
-      ${from} = value.${from};
-    })
+let toplevel = cursor == [ ]; in
+concatMapAttrsWith (mergeAttrsButConcatOn (if toplevel then to else from))
+  (file: value: if ! value ? ${from} then { ${file} = value; } else {
+    ${file} = removeAttrs value [ from ];
+    # top level ${from} declarations are omitted from merging
+    ${if toplevel then to else from} = value.${from};
+  })
