@@ -23,6 +23,7 @@ let
     pipe
     remove
     take
+    toList
     ;
 
   parsePath = suffix: path:
@@ -123,6 +124,10 @@ in
 , inputs ? { }
 , transformer ? _: id
 }:
+let
+  transformer' = cursor: flip pipe
+    (map (t: t cursor) (toList transformer));
+in
 
 assert all
   (name: inputs ? ${name}
@@ -130,15 +135,16 @@ assert all
   [ "self" "super" "root" ];
 
 view {
-  inherit transformer;
   pov = "external";
+  transformer = transformer';
   node = fix (node: {
     isDir = true;
     children = aggregate {
       inherit src loader inputs;
       tree = {
-        inherit node transformer;
         pov = [ ];
+        transformer = transformer';
+        inherit node;
       };
     };
   });
