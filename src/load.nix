@@ -23,6 +23,7 @@ let
     pipe
     remove
     take
+    toList
     ;
 
   parsePath = suffix: path:
@@ -43,7 +44,7 @@ let
 
   view = { cursor ? [ ], node, pov, transformer }:
     if node.isDir then
-      transformer
+      transformer cursor
         (flip concatMapAttrs node.children
           (name: node: optionalAttrs
             {
@@ -121,8 +122,12 @@ in
 { src
 , loader ? root.loaders.default
 , inputs ? { }
-, transformer ? id
+, transformer ? _: id
 }:
+let
+  transformer' = cursor: flip pipe
+    (map (t: t cursor) (toList transformer));
+in
 
 assert all
   (name: inputs ? ${name}
@@ -130,15 +135,16 @@ assert all
   [ "self" "super" "root" ];
 
 view {
-  inherit transformer;
   pov = "external";
+  transformer = transformer';
   node = fix (node: {
     isDir = true;
     children = aggregate {
       inherit src loader inputs;
       tree = {
-        inherit node transformer;
         pov = [ ];
+        transformer = transformer';
+        inherit node;
       };
     };
   });
