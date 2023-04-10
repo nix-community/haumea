@@ -191,6 +191,22 @@ This can be used to declare `imports` locally at the leaves
 of the configuration tree, where the module system would
 not otherwise tolerate them.
 
+### [`transformers.hoistAttrs`](src/transformers/hoistAttrs.nix)
+
+Type: `(from : String) -> (to : String) -> [ String ] -> { ... } -> { ... }`
+
+This transformer will hoist any attribute of type Attrs with key
+`${from}` up the chain. When the root node is reached, it will
+be renamed to an attribute of type Attrs with key `${to}` and
+as such presented back to the consumer.
+
+Neighbouring lists are concatenated (`recursiveUpdate`) during hoisting.
+Root doesn't concat `${from}` declarations, use `${to}` at the root.
+
+This can be used to declare `options` locally at the leaves
+of the configuration tree, where the module system would
+not otherwise tolerate them.
+
 ## Alternatives
 
 [std](https://github.com/divnix/std) is a more full-featured framework that also has filesystem-based auto-importing.
