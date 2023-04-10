@@ -45,6 +45,8 @@ Arguments:
 
   Module transformer, defaults to `[ ]` (no transformation).
   This will transform each directory module in `src`, including the root.
+  `cursor` represents the position of the directory being transformed, where `[ ]`
+  means root and `[ "foo" "bar" ]` means `root.foo.bar`.
 
 The main entry point of haumea. This is probably the function you are looking for.
 
