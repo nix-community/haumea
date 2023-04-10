@@ -179,7 +179,7 @@ Neighbouring lists are concatenated (`recursiveUpdate`) during hoisting.
 Root doesn't concat `${from}` declarations, use `${to}` at the root.
 
 This can be used to declare `options` locally at the leaves
-of the configuration tree, where the module system would
+of the configuration tree, where the NixOS module system would
 not otherwise tolerate them.
 
 ### [`transformers.hoistLists`](src/transformers/hoistLists.nix)
@@ -196,7 +196,7 @@ Root doesn't concat `${from}` declarations, use `${to}` at
 the root.
 
 This can be used to declare `imports` locally at the leaves
-of the configuration tree, where the module system would
+of the configuration tree, where the NixOS module system would
 not otherwise tolerate them.
 
 ### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
