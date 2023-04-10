@@ -1,0 +1,3 @@
+{
+  options = { root = "option"; };
+}
