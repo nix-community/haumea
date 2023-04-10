@@ -166,13 +166,21 @@ Type: `{ ... } -> Path -> a`
 This loader will simply `import` the file without providing any input.
 It is useful when the files being loaded are mostly functions that don't require any external input.
 
-### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
+### [`transformers.hoistAttrs`](src/transformers/hoistAttrs.nix)
 
-Type: `[ String ]: { ... } -> { ... }`
+Type: `(from : String) -> (to : String) -> [ String ] -> { ... } -> { ... }`
 
-This transformer will lift the contents of `default` into the module.
-It will fail if `default` is not an attribute set,
-or has any overlapping attributes with the module.
+This transformer will hoist any attribute of type Attrs with key
+`${from}` up the chain. When the root node is reached, it will
+be renamed to an attribute of type Attrs with key `${to}` and
+as such presented back to the consumer.
+
+Neighbouring lists are concatenated (`recursiveUpdate`) during hoisting.
+Root doesn't concat `${from}` declarations, use `${to}` at the root.
+
+This can be used to declare `options` locally at the leaves
+of the configuration tree, where the module system would
+not otherwise tolerate them.
 
 ### [`transformers.hoistLists`](src/transformers/hoistLists.nix)
 
@@ -191,21 +199,13 @@ This can be used to declare `imports` locally at the leaves
 of the configuration tree, where the module system would
 not otherwise tolerate them.
 
-### [`transformers.hoistAttrs`](src/transformers/hoistAttrs.nix)
+### [`transformers.liftDefault`](src/transformers/liftDefault.nix)
 
-Type: `(from : String) -> (to : String) -> [ String ] -> { ... } -> { ... }`
+Type: `[ String ] -> { ... } -> { ... }`
 
-This transformer will hoist any attribute of type Attrs with key
-`${from}` up the chain. When the root node is reached, it will
-be renamed to an attribute of type Attrs with key `${to}` and
-as such presented back to the consumer.
-
-Neighbouring lists are concatenated (`recursiveUpdate`) during hoisting.
-Root doesn't concat `${from}` declarations, use `${to}` at the root.
-
-This can be used to declare `options` locally at the leaves
-of the configuration tree, where the module system would
-not otherwise tolerate them.
+This transformer will lift the contents of `default` into the module.
+It will fail if `default` is not an attribute set,
+or has any overlapping attributes with the module.
 
 ## Alternatives
 
