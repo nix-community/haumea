@@ -14,16 +14,15 @@ let
   inherit (lib)
     concatMapAttrs
     fix
+    flatten
     flip
     getAttrFromPath
     hasSuffix
-    id
     nameValuePair
     optionalAttrs
     pipe
     remove
     take
-    toList
     ;
 
   parsePath = suffix: path:
@@ -122,11 +121,11 @@ in
 { src
 , loader ? root.loaders.default
 , inputs ? { }
-, transformer ? _: id
+, transformer ? [ ]
 }:
 let
   transformer' = cursor: flip pipe
-    (map (t: t cursor) (toList transformer));
+    (map (t: t cursor) (flatten transformer));
 in
 
 assert all

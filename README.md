@@ -41,9 +41,9 @@ Arguments:
   `self`, `super`, and `root` are reserved names that cannot be passed as an input.
   To work around that, remove them using `removeAttrs`, or pass them by overriding the loader.
 
-- (optional) `transformer` : `(cursor : [ String ]) -> { ... } -> a`
+- (optional) `transformer` : `(cursor : [ String ]) -> { ... } -> a` or a list of transformers
 
-  Module transformer, defaults to `_: id` (no transformation).
+  Module transformer, defaults to `[ ]` (no transformation).
   This will transform each directory module in `src`, including the root.
 
 The main entry point of haumea. This is probably the function you are looking for.
