@@ -1,10 +1,11 @@
 {
   options = {
     root = "option";
-    bar.tul = "option";
-    baz.qui = "option";
+    bar = {
+      baz.qui = "option";
+      tul = "option";
+    };
   };
   foo = "foo";
-  bar = { };
-  baz = { qux = "qux"; };
+  bar.baz.qux = "qux";
 }
