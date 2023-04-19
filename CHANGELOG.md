@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.1 - 2023-04-19
+
+## Features
+
+- `loaders.scoped` to utilize `scopedImport` instead of `import` for loading files
+
 ## v0.2.0 - 2023-04-10
 
 ## Breaking Changes
