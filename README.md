@@ -161,6 +161,14 @@ Type: `{ ... } -> Path -> Path`
 
 This loader will simply return the path of the file without `import`ing it.
 
+### [`loaders.scoped`](src/loaders/scoped.nix)
+
+Type: `{ self, super, root, ... } -> Path -> a`
+
+This is like [`loaders.default`], except it uses `scoepdImport` instead of `import`.
+With this loader, you don't have to explicitly declare the inputs with a lambda,
+since `scopedImport` will take care of it as if the file being loaded is wrapped with `with inputs;`.
+
 ### [`loaders.verbatim`](src/loaders/verbatim.nix)
 
 Type: `{ ... } -> Path -> a`

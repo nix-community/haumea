@@ -4,7 +4,9 @@ let
   load = import ./src/load.nix {
     inherit lib;
     root.loaders.default = import ./src/loaders {
-      inherit lib;
+      super.defaultWith = import ./src/loaders/__defaultWith.nix {
+        inherit lib;
+      };
     };
   };
 in
