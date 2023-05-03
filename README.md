@@ -134,6 +134,10 @@ otherwise it will always return `{ }` (an empty attribute set).
 
 As an example, haumea's [tests](tests) are loaded with `loadEvalTests`.
 
+Alternatively, [namaka](https://github.com/nix-community/namaka)
+provides utilities for snapshot testing,
+which can save you some time from writing reference values.
+
 ### [`loaders.callPackage`](src/loaders/callPackage.nix)
 
 Type: `{ self, super, root, ... } -> Path -> a`
