@@ -2,19 +2,19 @@
 
 ## v0.2.1 - 2023-04-19
 
-## Features
+### Features
 
 - `loaders.scoped` to utilize `scopedImport` instead of `import` for loading files
 
 ## v0.2.0 - 2023-04-10
 
-## Breaking Changes
+### Breaking Changes
 
 - Transformers now accept a ccursor as an argument.
   The type signature of `transformer` have changed
   from `{ ... } -> a` to `[ String ] -> { ... } -> a`
 
-## Features
+### Features
 
 - `transformers.hoistAttrs` and `transformers.hoistLists`
   bring a specific attribute name at all levels to the root.
@@ -22,7 +22,7 @@
 
 ## v0.1.1 - 2023-04-07
 
-## Features
+### Features
 
 - load: add transformer option
 - transformers: add liftDefault
