@@ -1,0 +1,10 @@
+[book]
+authors = ["figsoda"]
+description = "Filesystem-based module system for Nix"
+title = "haumea"
+
+[output.html]
+edit-url-template = "https://github.com/nix-community/haumea/edit/main/docs/{path}"
+git-repository-url = "https://github.com/nix-community/haumea"
+preferred-dark-theme = "ayu"
+site-url = "/haumea/"

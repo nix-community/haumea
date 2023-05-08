@@ -9,8 +9,8 @@ This doesn't apply to bug fixes.
 
 - Discuss before opening a pull request, so your work doesn't go to waste.
   Anything from GitHub issues to Matrix discussions is fine.
-- Update documentation accordingly. Everything in `haumea.lib` should to be documented.
-- Add [tests](tests) when necessary.
+- Update documentation accordingly. Everything in `haumea.lib` should be documented.
+- Add [tests](https://github.com/nix-community/haumea/tree/main/tests) when necessary.
   Test your changes with `nix flake check`. Make sure new files are added to git.
 
 ## Scope
