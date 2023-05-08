@@ -24,11 +24,12 @@
           pname = "haumea-docs";
           version = self.shortRev or "0000000";
 
-          src = ../. + "/docs";
+          src = ../.;
 
           nativeBuildInputs = [ pkgs.mdbook ];
 
           buildPhase = ''
+            cd docs
             mkdir theme
             ln -s ${pkgs.documentation-highlighter}/highlight.pack.js theme/highlight.js
             mdbook build -d $out
