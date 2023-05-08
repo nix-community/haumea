@@ -22,12 +22,12 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: Build docs
-        run: nix build ./docs
+        run: |
+          nix build ./docs
+          cp -r --no-preserve=all result/ _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
-        with:
-          path: result
 
   deploy:
     name: deploy
