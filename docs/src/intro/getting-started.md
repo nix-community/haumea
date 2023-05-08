@@ -20,7 +20,7 @@ You can use haumea without the template by adding it to your flake inputs:
 {{#include ../../../templates/default/flake.nix:2:8}}
 ```
 
-Haumea is pinged to a tag here so potential breaking changes in the main
+Haumea is pinged to a tag here so potential breaking changes in the main branch
 wouldn't break downstream consumers.
 See the [Versioning](versioning.html) chapter for information.
 
