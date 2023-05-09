@@ -17,13 +17,13 @@ This doesn't apply to bug fixes.
 
 Haumea only depends on [nixpkgs.lib](https://github.com/nix-community/nixpkgs.lib).
 Features that depend on the rest of [nixpkgs] should not be added.
-However, changes that are specific to, but doesn't depend on [nixpkgs] are allowed.
+However, changes that are specific to, but don't depend on [nixpkgs] are allowed.
 
 ## Style
 
 - Format all Nix files with [nixpkgs-fmt](https://github.com/nix-community/nixpkgs-fmt).
 - `with` should be avoided unless absolutely necessary,
   `let inherit` is preferred at almost all times.
-- `rec` attribute sets should be avoid at most times, use `self` or `let-in` instead.
+- `rec` attribute sets should be avoided at most times, use `self` or `let-in` instead.
 
 [nixpkgs]: https://github.com/nixos/nixpkgs
