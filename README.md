@@ -6,8 +6,49 @@ Haumea is not related to or a replacement for NixOS modules.
 It is closer to the module systems of traditional programming languages,
 with support for file hierarchy and visibility.
 
+In short, haumea maps a directory of Nix files into an attribute set:
+
+<table align="center">
+<thead>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+  </tr>
+</thead>
+<tr>
+  <td>
+
+```
+├─ foo/
+│  ├─ bar.nix
+│  ├─ baz.nix
+│  └─ __internal.nix
+├─ bar.nix
+└─ _utils/
+   └─ foo.nix
+```
+
+  </td>
+  <td>
+
+```nix
+{
+  foo = {
+    bar = <...>;
+    baz = <...>;
+  };
+  bar = <...>;
+}
+```
+
+  </td>
+</tr>
+</table>
+
 Haumea's source code is hosted on [GitHub](https://github.com/nix-community/haumea)
 under the [MPL-2.0](http://mozilla.org/MPL/2.0) license.
+Haumea bootstraps itself. You can see the entire implementation in the
+[src](https://github.com/nix-community/haumea/tree/main/src) directory.
 
 ## Why Haumea?
 

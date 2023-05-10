@@ -35,30 +35,34 @@ As an example, the entirety of haumea's API is `load`ed from the
 For a directory like this:
 
 ```
-<src>
+src
 ├─ foo/
 │  ├─ bar.nix
-│  └─ __baz.nix
-├─ _bar/
-│  └─ baz.nix
-└─ baz.nix
+│  ├─ baz.nix
+│  └─ __internal.nix
+├─ bar.nix
+└─ _utils/
+   └─ foo.nix
 ```
 
 The output will look like this:
 
 ```nix
 {
-  foo.bar = <...>;
-  baz = <...>;
+  foo = {
+    bar = <...>;
+    baz = <...>;
+  };
+  bar = <...>;
 }
 ```
 
-Notice that there is no `bar.baz`.
+Notice that there is no `utils`.
 This is because files and directories that start with `_` are only visible
 inside the directory being loaded, and will not be present in the final output.
 
 Similarly, files and directories that start with `__` are only visible if they are in the same directory,
-meaning `foo/__bar.nix` is only accessible if it is being accessed from within `foo`.
+meaning `foo/__internal.nix` is only accessible if it is being accessed from within `foo`.
 
 By default, the specified `inputs`, in addition to `self`, `super`, and `root`,
 will be passed to the file being loaded, if the file is a function.
@@ -82,7 +86,7 @@ Continuing the example above, this is the content of `foo/bar.nix` (`super` and 
 Accessing `self.b` here would cause infinite recursion,
 and accessing anything else would fail due to missing attributes.
 
-`super` will be `{ bar = self; baz = <...>; }`.
+`super` will be `{ bar = self; baz = <...>; internal = <...>; }`.
 
 And `root` will be:
 
@@ -92,10 +96,13 @@ And `root` will be:
   foo = {
     bar = <...>;
     baz = <...>;
+    internal = <...>;
   };
   baz = <...>;
+  utils.foo = <...>;
 }
 ```
 
 Note that this is different from the return value of `load`.
-`foo.baz` is accessible here because it is being accessed from within `foo`.
+`foo.internal` is accessible here because it is being accessed from within `foo`.
+Same for `utils`, which is accessible from all files within `src`, the directory being loaded.
