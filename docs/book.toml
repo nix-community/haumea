@@ -3,6 +3,9 @@ authors = ["figsoda"]
 description = "Filesystem-based module system for Nix"
 title = "haumea"
 
+[build]
+extra-watch-dirs = ["."]
+
 [output.html]
 edit-url-template = "https://github.com/nix-community/haumea/edit/main/docs/{path}"
 git-repository-url = "https://github.com/nix-community/haumea"

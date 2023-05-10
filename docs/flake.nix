@@ -19,6 +19,19 @@
         (system: f nixpkgs.legacyPackages.${system});
     in
     {
+      devShells = eachSystem (pkgs: {
+        default = pkgs.mkShell {
+          packages = [ pkgs.mdbook ];
+          shellHook = ''
+            toplevel=$(git rev-parse --show-toplevel) || exit
+            cd "$toplevel" || exit
+            mkdir -p docs/theme
+            ln -sf ${pkgs.documentation-highlighter}/highlight.pack.js docs/theme/highlight.js
+            mdbook serve docs
+          '';
+        };
+      });
+
       packages = eachSystem (pkgs: {
         default = pkgs.stdenv.mkDerivation {
           pname = "haumea-docs";

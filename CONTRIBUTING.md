@@ -13,6 +13,12 @@ This doesn't apply to bug fixes.
 - Add [tests](https://github.com/nix-community/haumea/tree/main/tests) when necessary.
   Test your changes with `nix flake check`. Make sure new files are added to git.
 
+## Documentation
+
+Documentation sits in the [docs](https://github.com/nix-community/haumea/tree/main/docs)
+directory. You can get started with `nix develop ./docs`, which will start up
+[mdbook](https://github.com/rust-lang/mdbook) and serve the documentation on localhost.
+
 ## Scope
 
 Haumea only depends on [nixpkgs.lib](https://github.com/nix-community/nixpkgs.lib).
