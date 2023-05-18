@@ -25,9 +25,14 @@ let
     take
     ;
 
-  parsePath = suffix: path:
+  parsePath = path: type:
     let
-      matches = match ''^(_{0,2})(.+)${suffix}$'' path;
+      matches =
+        if type == "directory"
+        then match ''^(_{0,2})(.+)$'' path
+        else if type == "regular"
+        then match ''^(_{0,2})(.+)\.[^.]+$'' path
+        else throw "unreachable";
     in
     {
       name = elemAt matches 1;
@@ -63,38 +68,38 @@ let
   aggregate = { src, loader, inputs, tree }:
     let
       aggregateEntry = path: type:
-        if type == "directory" then
-          let
-            parsed = parsePath "" path;
-            inherit (parsed) name visibility;
-          in
-          nameValuePair name {
-            inherit path visibility;
-            isDir = true;
-            children = aggregate {
-              inherit inputs loader;
-              src = src + "/${path}";
-              tree = tree // {
-                pov = tree.pov ++ [ name ];
-              };
+        let
+          parsed = parsePath path type;
+          inherit (parsed) name visibility;
+
+          children = aggregate {
+            inherit inputs loader;
+            src = src + "/${path}";
+            tree = tree // {
+              pov = tree.pov ++ [ name ];
             };
-          }
+          };
+
+          root = view tree;
+          content = fix (self:
+            loader
+              (inputs // {
+                inherit root self;
+                super = getAttrFromPath tree.pov root;
+              })
+              (src + "/${path}")
+          );
+        in
+        if type == "directory" then
+          nameValuePair name
+            {
+              inherit path visibility children;
+              isDir = true;
+            }
         else if type == "regular" && hasSuffix ".nix" path then
-          let
-            parsed = parsePath ''\.nix'' path;
-            inherit (parsed) name visibility;
-            root = view tree;
-          in
           nameValuePair name {
-            inherit path visibility;
+            inherit path visibility content;
             isDir = false;
-            content = fix (self:
-              loader
-                (inputs // {
-                  inherit root self;
-                  super = getAttrFromPath tree.pov root;
-                })
-                (src + "/${path}"));
           }
         else
           null;
