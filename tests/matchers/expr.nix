@@ -16,7 +16,7 @@ let
 
     let
       basename = elemAt matches 0;
-      ext = builtins.trace path elemAt  matches 1;
+      ext = builtins.trace path elemAt matches 1;
     in
 
     {

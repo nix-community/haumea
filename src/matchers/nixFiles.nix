@@ -1,4 +1,4 @@
-{super}:
+{ super }:
 
 let
   inherit (super) regex;

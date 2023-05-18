@@ -10,7 +10,7 @@ let
         };
       };
       matchers.nixFiles = import ./src/matchers/nixFiles.nix {
-        super.regex = import ./src/matchers/regex.nix {};
+        super.regex = import ./src/matchers/regex.nix { };
       };
     };
   };

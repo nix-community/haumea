@@ -113,10 +113,11 @@ let
               isDir = true;
             }
         else if type == "regular" then
-          nameValuePair name {
-            inherit path visibility content;
-            isDir = false;
-          }
+          nameValuePair name
+            {
+              inherit path visibility content;
+              isDir = false;
+            }
         else
           null;
     in
