@@ -6,6 +6,7 @@ let
     attrValues
     elemAt
     foldl'
+    isList
     length
     mapAttrs
     match
@@ -42,6 +43,21 @@ let
         "__" = "super";
       }.${elemAt matches 0};
     };
+
+  matchPathToLoaders = loaders: inputs: path:
+    let
+      file = baseNameOf path;
+      m = matched: next:
+        let
+          matches = next.matches file;
+        in
+        if matched != null
+        then matched
+        else if matches != null
+        then next.loader matches inputs path
+        else null;
+    in
+    foldl' m null loaders;
 
   entry = { isDir, path, ... }:
     "${if isDir then "directory" else "file"} '${path}'";
@@ -96,7 +112,7 @@ let
               inherit path visibility children;
               isDir = true;
             }
-        else if type == "regular" && hasSuffix ".nix" path then
+        else if type == "regular" then
           nameValuePair name {
             inherit path visibility content;
             isDir = false;
@@ -131,6 +147,10 @@ in
 let
   transformer' = cursor: flip pipe
     (map (t: t cursor) (flatten transformer));
+  loader' =
+    if isList loader
+    then matchPathToLoaders loader
+    else matchPathToLoaders [ (root.matchers.nixFiles loader) ];
 in
 
 assert all
@@ -144,7 +164,8 @@ view {
   node = fix (node: {
     isDir = true;
     children = aggregate {
-      inherit src loader inputs;
+      inherit src inputs;
+      loader = loader';
       tree = {
         pov = [ ];
         transformer = transformer';

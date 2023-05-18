@@ -6,4 +6,4 @@ let
     ;
 in
 
-inputs: path: callPackageWith inputs path { }
+_: inputs: path: callPackageWith inputs path { }
