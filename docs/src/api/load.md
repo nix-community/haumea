@@ -10,9 +10,9 @@ Arguments:
 
   The directory to load files from.
 
-- (optional) `loader` : `{ self, super, root, ... } -> Path -> a`
+- (optional) `loader` : `(matches : []) -> { self, super, root, ... } -> Path -> a`
 
-  Loader for the files, defaults to [`loaders.default`](loaders.html#loadersdefault).
+  Loader for the matched files, defaults to [`loaders.default`](loaders.html#loadersdefault) on nix files.
 
 - (optional) `inputs` : `{ ... }`
 
