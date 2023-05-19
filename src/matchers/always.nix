@@ -1,3 +1,3 @@
 _:
 
-f: { matches = _: true; loader = f; }
+f: { match = _: true; loader = f; __functor = self: self.loader; }

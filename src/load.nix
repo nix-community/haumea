@@ -49,12 +49,12 @@ let
       file = baseNameOf path;
       m = matched: next:
         let
-          matches = next.matches file;
+          matches = next.match file;
         in
         if matched != null
         then matched
         else if matches != null
-        then next.loader matches inputs path
+        then (next // { inherit matches; }) inputs path
         else null;
     in
     foldl' m null loaders;

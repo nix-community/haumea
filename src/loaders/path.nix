@@ -1,3 +1,3 @@
 _:
 
-_: _: path: path
+_: path: path

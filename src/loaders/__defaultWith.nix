@@ -13,7 +13,7 @@ in
 
 importer:
 
-_: inputs: path:
+inputs: path:
 
 let
   f = toFunction (importer path);

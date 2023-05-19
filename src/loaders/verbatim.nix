@@ -1,3 +1,3 @@
 _:
 
-_: _: import
+_: import

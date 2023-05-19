@@ -16,7 +16,7 @@ let
 
     let
       basename = elemAt matches 0;
-      ext = builtins.trace path elemAt matches 1;
+      ext = elemAt matches 1;
     in
 
     {
@@ -26,7 +26,10 @@ let
   loaded = haumea.load {
     src = ./__fixture;
     loader = [
-      (matchers.regex ''^(.+)\.(yaml|yml)$'' fakeLoadYaml)
+      (
+        (matchers.regex ''^(.+)\.(yaml|yml)$'' fakeLoadYaml)
+        // { __functor = self: (self.loader self.matches);}
+      )
       # default loader doesn't consume matches
       (matchers.always haumea.loaders.default)
     ];
