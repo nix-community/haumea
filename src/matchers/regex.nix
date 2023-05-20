@@ -4,4 +4,10 @@ let
   inherit (builtins) match;
 in
 
-re: f: { match = file: match re file; loader = f; __functor = self: self.loader; }
+re: f:
+
+{
+  matches = file: match re file != null;
+  loader = inputs: path:
+    f (match re (baseNameOf path)) inputs path;
+}

@@ -9,8 +9,11 @@ let
           inherit lib;
         };
       };
-      matchers.nixFiles = import ./src/matchers/nixFiles.nix {
-        super.regex = import ./src/matchers/regex.nix { };
+      matchers.nix = import ./src/matchers/nix.nix {
+        inherit lib;
+      };
+      parsePath = import ./src/__parsePath.nix {
+        inherit lib;
       };
     };
   };

@@ -4,12 +4,11 @@ let
   inherit (builtins)
     all
     attrValues
-    elemAt
+    filter
     foldl'
-    isList
+    head
     length
     mapAttrs
-    match
     readDir
     ;
   inherit (lib)
@@ -18,45 +17,13 @@ let
     flatten
     flip
     getAttrFromPath
+    isFunction
     nameValuePair
     optionalAttrs
     pipe
     remove
     take
     ;
-
-  parsePath = path: type:
-    let
-      matches =
-        if type == "directory"
-        then match ''^(_{0,2})(.+)$'' path
-        else if type == "regular"
-        then match ''^(_{0,2})(.+)\.[^.]+$'' path
-        else throw "unreachable";
-    in
-    {
-      name = elemAt matches 1;
-      visibility = {
-        "" = "public";
-        "_" = "root";
-        "__" = "super";
-      }.${elemAt matches 0};
-    };
-
-  matchPathToLoaders = loaders: inputs: path:
-    let
-      file = baseNameOf path;
-      m = matched: next:
-        let
-          matches = next.match file;
-        in
-        if matched != null
-        then matched
-        else if matches != null
-        then (next // { inherit matches; }) inputs path
-        else null;
-    in
-    foldl' m null loaders;
 
   entry = { isDir, path, ... }:
     "${if isDir then "directory" else "file"} '${path}'";
@@ -80,42 +47,42 @@ let
     else
       node.content;
 
-  aggregate = { src, loader, inputs, tree }:
+  aggregate = { src, matchers, inputs, tree }:
     let
       aggregateEntry = path: type:
         let
-          parsed = parsePath path type;
+          parsed = root.parsePath path type;
           inherit (parsed) name visibility;
-
-          children = aggregate {
-            inherit inputs loader;
-            src = src + "/${path}";
-            tree = tree // {
-              pov = tree.pov ++ [ name ];
-            };
-          };
-
-          root = view tree;
-          content = fix (self:
-            loader
-              (inputs // {
-                inherit root self;
-                super = getAttrFromPath tree.pov root;
-              })
-              (src + "/${path}")
-          );
+          matches = filter (m: m.matches (baseNameOf path)) matchers;
         in
-        if type == "directory" then
+        if parsed == null then
+          null
+        else if type == "directory" then
           nameValuePair name
             {
-              inherit path visibility children;
+              inherit path visibility;
               isDir = true;
+              children = aggregate {
+                inherit inputs matchers;
+                src = src + "/${path}";
+                tree = tree // {
+                  pov = tree.pov ++ [ name ];
+                };
+              };
             }
-        else if type == "regular" then
+        else if type == "regular" && matches != [ ] then
           nameValuePair name
             {
-              inherit path visibility content;
+              inherit path visibility;
               isDir = false;
+              content = fix (self:
+                (head matches).loader
+                  (inputs // {
+                    inherit self;
+                    super = getAttrFromPath tree.pov (view tree);
+                    root = view tree;
+                  })
+                  (src + "/${path}"));
             }
         else
           null;
@@ -144,13 +111,10 @@ in
 , inputs ? { }
 , transformer ? [ ]
 }:
+
 let
   transformer' = cursor: flip pipe
     (map (t: t cursor) (flatten transformer));
-  loader' =
-    if isList loader
-    then matchPathToLoaders loader
-    else matchPathToLoaders [ (root.matchers.nixFiles loader) ];
 in
 
 assert all
@@ -165,7 +129,11 @@ view {
     isDir = true;
     children = aggregate {
       inherit src inputs;
-      loader = loader';
+      matchers =
+        if isFunction loader then
+          [ (root.matchers.nix loader) ]
+        else
+          loader;
       tree = {
         pov = [ ];
         transformer = transformer';
