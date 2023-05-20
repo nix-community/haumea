@@ -1,18 +1,6 @@
 {
-  foo = {
-    success = true;
-    value."foo.yaml".me = "foo";
-  };
-  bar = {
-    success = true;
-    value."bar.yml".me = "bar";
-  };
-  baz = {
-    success = true;
-    value.me."me.yaml" = "baz.me";
-  };
-  rest = {
-    success = true;
-    value = 42;
-  };
+  foo."foo.yaml".me = "foo";
+  bar."bar.yml".me = "bar";
+  baz.me."me.yaml" = "baz.me";
+  rest = 42;
 }

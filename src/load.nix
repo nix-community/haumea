@@ -18,7 +18,6 @@ let
     flatten
     flip
     getAttrFromPath
-    hasSuffix
     nameValuePair
     optionalAttrs
     pipe
