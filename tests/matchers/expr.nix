@@ -26,7 +26,7 @@ haumea.load {
   src = ./__fixture;
   loader = [
     (matchers.regex ''^(.+)\.(yaml|yml)$'' fakeLoadYaml)
-    # default loader doesn't consume matches
-    (matchers.always haumea.loaders.default)
+    (matchers.nix haumea.loaders.default)
+    (matchers.always haumea.loaders.path)
   ];
 }
