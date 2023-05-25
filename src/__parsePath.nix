@@ -27,6 +27,8 @@ in
 if stripped == "" then
   null
 else {
+  inherit stripped;
+
   name = {
     directory = stripped;
 

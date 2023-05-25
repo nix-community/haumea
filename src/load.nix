@@ -52,8 +52,8 @@ let
       aggregateEntry = path: type:
         let
           parsed = root.parsePath path type;
-          inherit (parsed) name visibility;
-          matches = filter (m: m.matches (baseNameOf path)) matchers;
+          inherit (parsed) name visibility stripped;
+          matches = filter (m: m.matches stripped) matchers;
         in
         if parsed == null then
           null
