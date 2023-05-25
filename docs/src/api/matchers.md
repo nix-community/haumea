@@ -20,10 +20,10 @@ Type: `regex -> loader -> matcher`
 
 Matches the regex, matching group matches are made available to the loader.
 
-## `matchers.nixFiles`
+## `matchers.nix`
 
-Source: [`src/matchers/nixFiles.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/nixFiles.nix)
+Source: [`src/matchers/nix.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/nix.nix)
 
 Type: `loader -> matcher`
 
-Matches the regex `^(.+)\.nix$`. This is the default matcher if no matchers are defined.
+Matches files that end in `.nix`. This is the default matcher if no matchers are defined.
