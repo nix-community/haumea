@@ -75,3 +75,5 @@ Haumea bootstraps itself. You can see the entire implementation in the
   and the `transformer` option makes it possible to extensively manipulate the tree.
 
 [^1]: Unless you are doing transformer magic
+
+[*➔ Getting Started*](https://nix-community.github.io/haumea/intro/getting-started.html)
