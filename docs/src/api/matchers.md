@@ -41,6 +41,14 @@ Type: `String -> ({ self, super, root, ... } -> Path -> a }) -> Matcher`
 Matches files with the given extension.
 `matchers.extension "foo"` matches `a.foo` and `a.b.foo`, but not `.foo`.
 
+## `matchers.json`
+
+Source: [`src/matchers/json.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/json.nix)
+
+Type: `Matcher`
+
+Matches all JSON files and loads them using `lib.importJSON`.
+
 ## `matchers.nix`
 
 Source: [`src/matchers/nix.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/nix.nix)
