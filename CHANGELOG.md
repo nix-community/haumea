@@ -18,8 +18,6 @@
   - `regex` matches the file using the given regex
   - `toml` loads all TOML files
 
-### Features
-
 ## v0.2.1 - 2023-04-19
 
 ### Features
