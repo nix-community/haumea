@@ -32,13 +32,24 @@ Type: `({ self, super, root, ... } -> Path -> a }) -> Matcher`
 
 Matches any file name. This can be used as the last matcher as a catch-all.
 
+## `matchers.extension`
+
+Source: [`src/matchers/extension.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/extension.nix)
+
+Type: `String -> ({ self, super, root, ... } -> Path -> a }) -> Matcher`
+
+Matches files with the given extension.
+`matchers.extension "foo"` matches `a.foo` and `a.b.foo`, but not `.foo`.
+
 ## `matchers.nix`
 
 Source: [`src/matchers/nix.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/nix.nix)
 
 Type: `({ self, super, root, ... } -> Path -> a }) -> Matcher`
 
-Matches files that end in `.nix`. This is the default matcher if no matchers are defined.
+Matches files that end in `.nix`. This is equivalent to `matchers.extension "nix"`.
+
+This is the default matcher if no matchers are defined.
 
 ## `matchers.regex`
 

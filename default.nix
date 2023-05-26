@@ -10,7 +10,9 @@ let
         };
       };
       matchers.nix = import ./src/matchers/nix.nix {
-        inherit lib;
+        super.extension = import ./src/matchers/extension.nix {
+          inherit lib;
+        };
       };
       parsePath = import ./src/__parsePath.nix {
         inherit lib;
