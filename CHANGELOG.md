@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.2.2 - 2023-05-26
+
+### Features
+
+- New [book](https://nix-community.github.io/haumea)
+- load: `loader` now also accepts a list of matchers for loading non-Nix files
+  ([#10](https://github.com/nix-community/haumea/pull/10))
+
+  The following matchers and functions available under
+  [`matchers`](https://nix-community.github.io/haumea/api/matchers.html):
+
+  - `always` always matches the file regardless of its file name
+  - `extension` matches the file by its extension
+  - `json` loads all JSON files
+  - `nix` is the default matcher if the `loader` is a function and not a list of matchers
+  - `regex` matches the file using the given regex
+  - `toml` loads all TOMl files
+
+### Features
+
 ## v0.2.1 - 2023-04-19
 
 ### Features
