@@ -35,7 +35,7 @@ In `flake.nix`, the main thing you want to look at is `lib`:
 ```
 
 `haumea.lib.load` is the main entry point of haumea.
-It loads a directory (`./src`) of Nix files into an attribute set.
+It loads a directory (`./src`) of Nix files[^1] into an attribute set.
 You can see the result of this by running `nix eval .#lib`:
 
 ```nix
@@ -69,5 +69,7 @@ The documentation for [`load`] explains this more thoroughly and talks about som
 `checks` works basically the same, just with
 [`loadEvalTests`](../api/loadEvalTests.html) instead of [`load`].
 You can run the checks with `nix flake check`.
+
+[^1]: Non-Nix files can also be loaded using [matchers](../api/matchers.html)
 
 [`load`]: ../api/load.html

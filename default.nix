@@ -3,8 +3,16 @@
 let
   load = import ./src/load.nix {
     inherit lib;
-    root.loaders.default = import ./src/loaders {
-      super.defaultWith = import ./src/loaders/__defaultWith.nix {
+    root = {
+      loaders.default = import ./src/loaders {
+        super.defaultWith = import ./src/loaders/__defaultWith.nix {
+          inherit lib;
+        };
+      };
+      matchers.nix = import ./src/matchers/nix.nix {
+        inherit lib;
+      };
+      parsePath = import ./src/__parsePath.nix {
         inherit lib;
       };
     };
