@@ -10,9 +10,11 @@ Arguments:
 
   The directory to load files from.
 
-- (optional) `loader` : `{ self, super, root, ... } -> Path -> a`
+- (optional) `loader` : `({ self, super, root, ... } -> Path -> a) | [ Matcher ]`
 
   Loader for the files, defaults to [`loaders.default`](loaders.html#loadersdefault).
+  It can be either a function that loads of Nix file,
+  or a list of [matchers](matchers.html) that allows you to load any type of file.
 
 - (optional) `inputs` : `{ ... }`
 
@@ -28,7 +30,7 @@ Arguments:
   `cursor` represents the position of the directory being transformed,
   where `[ ]` means root and `[ "foo" "bar" ]` means `root.foo.bar`.
 
-Nix files found in `src` are loaded into an attribute set with the specified `loader`.
+Files found in `src` are loaded into an attribute set with the specified `loader`.
 As an example, the entirety of haumea's API is `load`ed from the
 [src](https://github.com/nix-community/haumea/tree/main/src) directory.
 
