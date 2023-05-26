@@ -16,7 +16,7 @@
   - `json` loads all JSON files
   - `nix` is the default matcher if the `loader` is a function and not a list of matchers
   - `regex` matches the file using the given regex
-  - `toml` loads all TOMl files
+  - `toml` loads all TOML files
 
 ### Features
 
