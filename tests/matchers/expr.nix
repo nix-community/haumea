@@ -28,6 +28,7 @@ haumea.load {
     (matchers.regex ''^(.+)\.(yaml|yml)$'' fakeLoadYaml)
     (matchers.nix haumea.loaders.default)
     matchers.json
+    matchers.toml
     (matchers.always haumea.loaders.path)
   ];
 }

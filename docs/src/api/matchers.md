@@ -69,4 +69,12 @@ Matches the file name using the given regex.
 Instead of a regular loader, the function will also take the regex matches
 returned by `builtins.match`, as shown in the type signature (`[ String ]`).
 
+## `matchers.toml`
+
+Source: [`src/matchers/toml.nix`](https://github.com/nix-community/haumea/blob/main/src/matchers/toml.nix)
+
+Type: `Matcher`
+
+Matches all TOML files and loads them using `lib.importTOML`.
+
 [`load`]: load.html

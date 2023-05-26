@@ -1,5 +1,6 @@
 {
   foo."foo.yaml".me = "foo";
+  "foo.bar".this.is = "foo.bar";
   bar."bar.yml".me = "bar";
   baz = {
     ".nix" = ./__fixture/baz/.nix;
