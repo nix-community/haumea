@@ -96,7 +96,7 @@ let
         (acc: { name, value }:
           if acc ? ${name} then
             throw ''
-              haumea failed when traversing ${src}
+              haumea failed when traversing ${toString src}
               - ${entry acc.${name}} conflicts with ${entry value}
             ''
           else
