@@ -46,3 +46,12 @@ Type: `[ String ] -> { ... } -> { ... }`
 This transformer will lift the contents of `default` into the module.
 It will fail if `default` is not an attribute set,
 or has any overlapping attributes with the module.
+
+## `transformers.prependUnderscore`
+
+Source: [`src/transformers/prependUnderscore.nix`](https://github.com/nix-community/haumea/blob/main/src/transformers/prependUnderscore.nix)
+
+Type: `[ String ] -> { ... } -> { ... }`
+
+This transformer prepnds `_` to attributes that are not valid identifiers, e.g. `42` -> `_42`.
+Attributes that are already valid identifiers (e.g. `foo`) are left unchanged.
