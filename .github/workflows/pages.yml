@@ -27,7 +27,7 @@ jobs:
           cp -r --no-preserve=all result/ _site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
 
   deploy:
     name: deploy
