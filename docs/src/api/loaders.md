@@ -39,7 +39,7 @@ Source: [`src/loaders/scoped.nix`](https://github.com/nix-community/haumea/blob/
 
 Type: `{ self, super, root, ... } -> Path -> a`
 
-This is like [`loaders.default`], except it uses `scoepdImport` instead of `import`.
+This is like [`loaders.default`], except it uses `scopedImport` instead of `import`.
 With this loader, you don't have to explicitly declare the inputs with a lambda,
 since `scopedImport` will take care of it as if the file being loaded is wrapped with `with inputs;`.
 
