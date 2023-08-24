@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
+  workflow_dispatch:
 
 jobs:
   release:
@@ -12,3 +13,15 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           body: "[CHANGELOG.md](https://github.com/nix-community/haumea/blob/main/CHANGELOG.md)"
+
+  flakehub:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: DeterminateSystems/nix-installer-action@v4
+      - uses: DeterminateSystems/flakehub-push@v3
+        with:
+          visibility: public
