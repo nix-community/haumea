@@ -5,10 +5,16 @@ on:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
   workflow_dispatch:
+    inputs:
+      tag:
+        description: The existing tag to publish to FlakeHub
+        type: string
+        required: true
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
     steps:
       - uses: softprops/action-gh-release@v1
         with:
@@ -21,7 +27,10 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ format('refs/tags/{0}', inputs.tag) }}
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/flakehub-push@v3
         with:
           visibility: public
+          tag: ${{ inputs.tag }}
