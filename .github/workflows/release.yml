@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ format('refs/tags/{0}', inputs.tag) }}
+          ref: ${{ inputs.tag != null && format('refs/tags/{0}', inputs.tag) || '' }}
       - uses: DeterminateSystems/nix-installer-action@v4
       - uses: DeterminateSystems/flakehub-push@v3
         with:
