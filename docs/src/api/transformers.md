@@ -53,5 +53,5 @@ Source: [`src/transformers/prependUnderscore.nix`](https://github.com/nix-commun
 
 Type: `[ String ] -> { ... } -> { ... }`
 
-This transformer prepnds `_` to attributes that are not valid identifiers, e.g. `42` -> `_42`.
+This transformer prepends `_` to attributes that are not valid identifiers, e.g. `42` -> `_42`.
 Attributes that are already valid identifiers (e.g. `foo`) are left unchanged.
