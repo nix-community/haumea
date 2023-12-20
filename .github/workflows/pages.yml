@@ -42,4 +42,4 @@ jobs:
     steps:
       - name: Deploy pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
