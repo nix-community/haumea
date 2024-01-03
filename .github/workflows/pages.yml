@@ -19,7 +19,7 @@ jobs:
         uses: cachix/install-nix-action@v24
 
       - name: Setup pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
 
       - name: Build docs
         run: |
