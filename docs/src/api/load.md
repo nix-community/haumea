@@ -30,6 +30,14 @@ Arguments:
   `cursor` represents the position of the directory being transformed,
   where `[ ]` means root and `[ "foo" "bar" ]` means `root.foo.bar`.
 
+- (optional) `forcePublic` : `bool`
+
+  When enabled, forces public visibility for all files, regardless of
+  any `_` or `__` prefixes. Defaults to false.
+
+  For obvious reasons, this flag should be used sparingly, but it's useful when debugging
+  and dogfooding your `load` result outside of `load` itself.
+
 Files found in `src` are loaded into an attribute set with the specified `loader`.
 As an example, the entirety of haumea's API is `load`ed from the
 [src](https://github.com/nix-community/haumea/tree/main/src) directory.

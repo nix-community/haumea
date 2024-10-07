@@ -47,11 +47,11 @@ let
     else
       node.content;
 
-  aggregate = { src, matchers, inputs, tree }:
+  aggregate = { src, matchers, inputs, tree, forcePublic }:
     let
       aggregateEntry = path: type:
         let
-          parsed = root.parsePath path type;
+          parsed = root.parsePath { inherit path type forcePublic; };
           inherit (parsed) name visibility stripped;
           matches = filter (m: m.matches stripped) matchers;
         in
@@ -63,7 +63,7 @@ let
               inherit path visibility;
               isDir = true;
               children = aggregate {
-                inherit inputs matchers;
+                inherit inputs matchers forcePublic;
                 src = src + "/${path}";
                 tree = tree // {
                   pov = tree.pov ++ [ name ];
@@ -110,6 +110,7 @@ in
 , loader ? root.loaders.default
 , inputs ? { }
 , transformer ? [ ]
+, forcePublic ? false
 }:
 
 let
@@ -128,7 +129,7 @@ view {
   node = fix (node: {
     isDir = true;
     children = aggregate {
-      inherit src inputs;
+      inherit src inputs forcePublic;
       matchers =
         if isFunction loader then
           [ (root.matchers.nix loader) ]

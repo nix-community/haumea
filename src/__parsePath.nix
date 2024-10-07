@@ -18,7 +18,7 @@ let
     ;
 in
 
-path: type:
+{ path, type, forcePublic ? false }:
 
 let
   stripped = removePrefix "_" (removePrefix "_" path);
@@ -48,7 +48,9 @@ else {
   }.${type};
 
   visibility =
-    if hasPrefix "__" path then
+    if forcePublic then
+      "public"
+    else if hasPrefix "__" path then
       "super"
     else if hasPrefix "_" path then
       "root"
