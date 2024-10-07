@@ -2,7 +2,7 @@
 
 Source: [`src/load.nix`](https://github.com/nix-community/haumea/blob/main/src/load.nix)
 
-Type: `{ src, loader?, inputs?, transformer? } -> { ... }`
+Type: `{ src, loader?, inputs?, transformer?, forcePublic? } -> { ... }`
 
 Arguments:
 
@@ -32,8 +32,8 @@ Arguments:
 
 - (optional) `forcePublic` : `bool`
 
-  When enabled, forces public visibility for all files, regardless of
-  any `_` or `__` prefixes. Defaults to false.
+  When `true`, forces public visibility for all files, regardless of
+  any `_` or `__` prefixes. Defaults to `false`.
 
   For obvious reasons, this flag should be used sparingly, but it's useful when debugging
   and dogfooding your `load` result outside of `load` itself.
