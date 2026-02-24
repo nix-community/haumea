@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install nix
-        uses: cachix/install-nix-action@v25
+        uses: cachix/install-nix-action@v31
 
       - name: Setup pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Build docs
         run: |
@@ -27,7 +27,7 @@ jobs:
           cp -r --no-preserve=all result/ _site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
 
   deploy:
     name: deploy

@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'workflow_dispatch'
     steps:
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           body: "[CHANGELOG.md](https://github.com/nix-community/haumea/blob/main/CHANGELOG.md)"
 
@@ -26,11 +26,11 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.tag != null && format('refs/tags/{0}', inputs.tag) || '' }}
-      - uses: DeterminateSystems/nix-installer-action@v9
-      - uses: DeterminateSystems/flakehub-push@v4
+      - uses: DeterminateSystems/nix-installer-action@v21
+      - uses: DeterminateSystems/flakehub-push@v6
         with:
           visibility: public
           tag: ${{ inputs.tag }}
