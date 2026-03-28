@@ -14,27 +14,45 @@ let
     removeAttrs
     ;
   inherit (lib)
+    recursiveUpdate
+    foldlAttrs
     catAttrs
     concatLists
     ;
-  inherit (super.utils)
-    concatMapAttrsWith
-    ;
-
-  # merge attributes shallowly, but concat values of a specific key into a list in that key
-  # Type: ((key : String) -> { ... } -> { ... }) -> { ${key} : [ a ], ... }
-  mergeAttrsButConcatOn = key: x: y:
-    x // y // {
-      ${key} = concatLists (catAttrs key [ x y ]);
-    };
 in
 
 cursor:
 
-let toplevel = cursor == [ ]; in
-concatMapAttrsWith (mergeAttrsButConcatOn (if toplevel then to else from))
-  (file: value: if ! value ? ${from} then { ${file} = value; } else {
-    ${file} = removeAttrs value [ from ];
-    # top level ${from} declarations are omitted from merging
-    ${if toplevel then to else from} = value.${from};
-  })
+let
+  toplevel = cursor == [ ];
+
+  hoistMergeLists = acc: name: value: let
+
+    new =
+
+      if value ? ${from} # eval on value here can cause infinite recursion
+
+      then {
+        ${name} = removeAttrs value [ from ];
+
+        # hoist
+        ${if toplevel then to else from} = concatLists (
+          catAttrs to   [ acc value ] ++
+          catAttrs from [ acc value ]
+        );
+      }
+
+      # merge with initial top level ${to}
+      else if name == to && acc ? ${to} then {
+        ${name} = acc.${to} ++ value;
+      }
+
+      else {
+        ${name} = value;
+      };
+
+  in recursiveUpdate acc new;
+
+in
+
+foldlAttrs hoistMergeLists {}
