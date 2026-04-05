@@ -2,7 +2,7 @@
 
 Source: [`src/load.nix`](https://github.com/nix-community/haumea/blob/main/src/load.nix)
 
-Type: `{ src, loader?, inputs?, transformer? } -> { ... }`
+Type: `{ src, loader?, inputs?, transformer?, forcePublic? } -> { ... }`
 
 Arguments:
 
@@ -29,6 +29,14 @@ Arguments:
   This will transform each directory module in `src`, including the root.
   `cursor` represents the position of the directory being transformed,
   where `[ ]` means root and `[ "foo" "bar" ]` means `root.foo.bar`.
+
+- (optional) `forcePublic` : `bool`
+
+  When `true`, forces public visibility for all files, regardless of
+  any `_` or `__` prefixes. Defaults to `false`.
+
+  For obvious reasons, this flag should be used sparingly, but it's useful when debugging
+  and dogfooding your `load` result outside of `load` itself.
 
 Files found in `src` are loaded into an attribute set with the specified `loader`.
 As an example, the entirety of haumea's API is `load`ed from the
