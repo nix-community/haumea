@@ -79,6 +79,7 @@ let
                 (head matches).loader
                   (inputs // {
                     inherit self;
+                    cursor = tree.pov ++ [ name ];
                     super = getAttrFromPath tree.pov (view tree);
                     root = view tree;
                   })
