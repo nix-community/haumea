@@ -2,7 +2,7 @@
   description = "Filesystem-based module system for Nix";
 
   inputs = {
-    nixpkgs.url = "github:nix-community/nixpkgs.lib";
+    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
   };
 
   outputs = { self, nixpkgs }: {
