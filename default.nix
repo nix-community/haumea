@@ -1,4 +1,4 @@
-{ lib ? import <nixpkgs/lib> }:
+{ lib ? import <nixpkgs-lib/lib> }:
 
 let
   load = import ./src/load.nix {
