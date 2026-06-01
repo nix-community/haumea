@@ -5,16 +5,16 @@
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
   };
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs-lib }: {
     checks = self.lib.loadEvalTests {
       src = ./tests;
       inputs = {
-        inherit (nixpkgs) lib;
+        inherit (nixpkgs-lib) lib;
         haumea = self.lib;
       };
     };
     lib = import self {
-      inherit (nixpkgs) lib;
+      inherit (nixpkgs-lib) lib;
     };
     templates = {
       default = {
