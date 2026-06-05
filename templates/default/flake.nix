@@ -5,10 +5,9 @@
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
     nixpkgs-lib.url = "github:nix-community/nixpkgs.url";
-nixpkgs.url = "github:NixOS/nixpkgs-unstable";
   };
 
-  outputs = { self, haumea, nixpkgs }: {
+  outputs = { self, haumea, nixpkgs-lib }: {
     checks = haumea.lib.loadEvalTests {
       src = ./tests;
       inputs = {
