@@ -10,21 +10,42 @@ from: to:
 #   nature, they won't be part of the final view presented to the user
 
 let
+  inherit (builtins)
+    removeAttrs
+    ;
   inherit (lib)
     recursiveUpdate
-    ;
-  inherit (super.utils)
-    concatMapAttrsWith
+    foldlAttrs
     ;
 in
 
 cursor:
 
-let toplevel = cursor == [ ]; in
-concatMapAttrsWith recursiveUpdate
-  (file: value: if ! value ? ${from} then { ${file} = value; } else {
-    ${file} = removeAttrs value [ from ];
-    # top level ${from} declarations are omitted from merging
-    ${if toplevel then to else from} = { ${file} = value.${from}; };
-  })
+let
 
+  toplevel = cursor == [ ];
+
+  hoistRecursiveUpdate = acc: name: value: let
+
+    new =
+
+      if value ? ${from} # eval on value here can cause infinite recursion
+
+      then {
+        ${name} = removeAttrs value [ from ];
+
+        # hoist
+        ${if toplevel then to else from} = {
+          ${name} = value.${from};
+        };
+      }
+
+      else {
+        ${name} = value;
+      };
+
+  in recursiveUpdate acc new;
+
+in
+
+foldlAttrs hoistRecursiveUpdate {}
